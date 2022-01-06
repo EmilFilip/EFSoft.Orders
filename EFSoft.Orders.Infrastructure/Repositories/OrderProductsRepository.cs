@@ -47,7 +47,7 @@ public class OrderProductsRepository : IOrderProductsRepository
 
         if (entity != null)
         {
-            entity.UpdatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.UtcNow;
             entity.Quantity = order.Quantity;
 
             _ordersDbContext.Update(entity);
