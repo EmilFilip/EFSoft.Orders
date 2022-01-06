@@ -19,6 +19,14 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(GetOrderQueryResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Get()
+    {
+        return Ok("The Orders Microservice is working fine");
+    }
+
+    [HttpGet]
     [Route("{orderId:guid}")]
     [ProducesResponseType(typeof(GetOrderQueryResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
