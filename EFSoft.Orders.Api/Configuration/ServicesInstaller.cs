@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace EFSoft.Orders.Api.Configuration;
+﻿namespace EFSoft.Orders.Api.Configuration;
 
 [ExcludeFromCodeCoverage]
 public static class ServicesInstaller
@@ -12,10 +10,14 @@ public static class ServicesInstaller
         return services
              .AddCqrs(configurator =>
                     configurator.AddHandlers(typeof(GetOrderQueryParameters).Assembly))
+             .AddServiceBus()
              .AddDbContext<OrdersDbContext>(
                 options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("OrdersConnectionString"));
+                    options.UseSqlServer(configuration.GetConnectionString("OrdersConnectionString"), sqlServeroptions =>
+                    {
+                        sqlServeroptions.EnableRetryOnFailure();
+                    });
                 })
              .AddScoped<IOrdersRepository, OrdersRepository>()
              .AddScoped<IOrderProductsRepository, OrderProductsRepository>();

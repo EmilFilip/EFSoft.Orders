@@ -14,6 +14,16 @@ public class OrderProductModel
         Quantity = quantity;
     }
 
+    public OrderProductModel(
+         Guid orderId,
+         Guid productId,
+         int quantity)
+    {
+        OrderId = orderId;
+        ProductId = productId;
+        Quantity = quantity;
+    }
+
     public static OrderProductModel CreateNew(
          Guid orderId,
          Guid productId,

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFSoft.Orders.Api", "EFSoft.Orders.Api\EFSoft.Orders.Api.csproj", "{95AF3AEF-2520-4DDF-A9E1-EF27C00B10C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFSoft.Orders.Api", "EFSoft.Orders.Api\EFSoft.Orders.Api.csproj", "{95AF3AEF-2520-4DDF-A9E1-EF27C00B10C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFSoft.Orders.Application", "EFSoft.Orders.Application\EFSoft.Orders.Application.csproj", "{4CF3D9DC-3210-4BC0-A0B3-ED02B29A09A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFSoft.Orders.Application", "EFSoft.Orders.Application\EFSoft.Orders.Application.csproj", "{4CF3D9DC-3210-4BC0-A0B3-ED02B29A09A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFSoft.Orders.Domain", "EFSoft.Orders.Domain\EFSoft.Orders.Domain.csproj", "{0BEDA522-AD2D-44B3-BDC7-FC741C290E9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFSoft.Orders.Domain", "EFSoft.Orders.Domain\EFSoft.Orders.Domain.csproj", "{0BEDA522-AD2D-44B3-BDC7-FC741C290E9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFSoft.Orders.Infrastructure", "EFSoft.Orders.Infrastructure\EFSoft.Orders.Infrastructure.csproj", "{9C931314-45C2-4486-B8CA-29399105199B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFSoft.Orders.Infrastructure", "EFSoft.Orders.Infrastructure\EFSoft.Orders.Infrastructure.csproj", "{9C931314-45C2-4486-B8CA-29399105199B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
