@@ -1,6 +1,6 @@
 ﻿namespace EFSoft.Orders.Application.Events;
 
-internal interface OrderPlaced
+public class OrderPlaced
 {
     public Guid CustomerId { get; }
 
