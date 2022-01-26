@@ -1,13 +1,18 @@
 var builder = WebApplication.CreateBuilder(args);
 
+if (!builder.Environment.IsDevelopment())
+{
+    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("OrdersConnectionString");
+
+    builder.Configuration.AddAzureAppConfiguration(config =>
+    {
+        config.Connect(appConfigurationConnectionString);
+    });
+}
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-//builder.Services.AddDbContext<OrdersDbContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("OrdersConnectionString"));
-//});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen(c =>
