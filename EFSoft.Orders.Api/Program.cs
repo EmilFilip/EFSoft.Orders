@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 if (!builder.Environment.IsDevelopment())
 {
-    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("OrdersConnectionString");
+    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
 
     builder.Configuration.AddAzureAppConfiguration(config =>
     {
