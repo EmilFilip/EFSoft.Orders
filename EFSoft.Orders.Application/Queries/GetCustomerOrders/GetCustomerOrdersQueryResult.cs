@@ -1,6 +1,6 @@
-﻿namespace EFSoft.Orders.Application.Queries.Results;
+﻿namespace EFSoft.Orders.Application.Queries.GetCustomerOrders;
 
-public class GetCustomerOrdersQueryResult : IQueryResult
+public class GetCustomerOrdersQueryResult
 {
     public GetCustomerOrdersQueryResult(IEnumerable<OrderModel> orders)
     {

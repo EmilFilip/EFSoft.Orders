@@ -1,6 +1,6 @@
-﻿namespace EFSoft.Orders.Application.Commands.Handlers;
+﻿namespace EFSoft.Orders.Application.Commands.UpdateOrder;
 
-public class UpdateOrderCommandHandler : ICommandHandler<UpdateOrderCommandParameters>
+public class UpdateOrderCommandHandler : ICommandHandler<UpdateOrderCommand>
 {
     private readonly IOrdersRepository _ordersRepository;
     private readonly IOrderProductsRepository _orderProductsRepository;
@@ -9,12 +9,13 @@ public class UpdateOrderCommandHandler : ICommandHandler<UpdateOrderCommandParam
         IOrdersRepository ordersRepository,
         IOrderProductsRepository orderProductsRepository)
     {
-        _ordersRepository = ordersRepository ?? throw new ArgumentNullException(nameof(ordersRepository));
-        _orderProductsRepository = orderProductsRepository ?? throw new ArgumentNullException(nameof(orderProductsRepository));
+        _ordersRepository = ordersRepository;
+        _orderProductsRepository = orderProductsRepository;
     }
 
-    public async Task HandleAsync(
-        UpdateOrderCommandParameters command)
+    public async Task Handle(
+        UpdateOrderCommand command,
+        CancellationToken cancellationToken)
     {
         var order = new OrderModel(
             orderId: command.OrderId,

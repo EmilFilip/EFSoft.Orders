@@ -1,10 +1,8 @@
 ﻿namespace EFSoft.Orders.Application.Events;
 
-public class OrderPlaced
+public sealed record class OrderPlaced(
+    Guid CustomerId,
+    Guid ProductId,
+    int Quantity)
 {
-    public Guid CustomerId { get; }
-
-    public Guid ProductId { get; }
-
-    public int Quantity { get; }
 }

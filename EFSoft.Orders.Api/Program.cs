@@ -4,15 +4,20 @@ if (!builder.Environment.IsDevelopment())
 {
     var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
 
-    builder.Configuration.AddAzureAppConfiguration(config =>
+    builder.Configuration.AddAzureAppConfiguration(options =>
     {
-        config.Connect(appConfigurationConnectionString);
+        options.Connect(appConfigurationConnectionString)
+                .ConfigureRefresh(refresh =>
+                {
+                    refresh.Register("Settings:Sentinel", refreshAll: true).SetCacheExpiration(new TimeSpan(0, 1, 0));
+                });
     });
 }
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
+builder.Configuration.AddEnvironmentVariables();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen(c =>
@@ -23,6 +28,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.RegisterLocalServices(builder.Configuration);
 
 var app = builder.Build();
+
+app.MapCustomerEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,7 +44,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

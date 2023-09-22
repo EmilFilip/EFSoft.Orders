@@ -8,8 +8,7 @@ public static class ServicesInstaller
                     IConfiguration configuration)
     {
         return services
-             .AddCqrs(configurator =>
-                    configurator.AddHandlers(typeof(GetOrderQueryParameters).Assembly))
+             .RegisterCqrs(typeof(GetOrderQuery).Assembly)
              .AddServiceBus()
              .AddDbContext<OrdersDbContext>(
                 options =>

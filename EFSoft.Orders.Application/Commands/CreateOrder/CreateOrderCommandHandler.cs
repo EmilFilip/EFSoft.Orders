@@ -1,6 +1,6 @@
-﻿namespace EFSoft.Orders.Application.Commands.Handlers;
+﻿namespace EFSoft.Orders.Application.Commands.CreateOrder;
 
-public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommandParameters>
+public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
 {
     private readonly IOrdersRepository _ordersRepository;
     private readonly IOrderProductsRepository _orderProductsRepository;
@@ -11,13 +11,14 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommandParam
         IOrderProductsRepository orderProductsRepository,
         IServiceBus serviceBus)
     {
-        _ordersRepository = ordersRepository ?? throw new ArgumentNullException(nameof(ordersRepository));
-        _orderProductsRepository = orderProductsRepository ?? throw new ArgumentNullException(nameof(orderProductsRepository));
-        _serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus));
+        _ordersRepository = ordersRepository;
+        _orderProductsRepository = orderProductsRepository;
+        _serviceBus = serviceBus;
     }
 
-    public async Task HandleAsync(
-        CreateOrderCommandParameters command)
+    public async Task Handle(
+        CreateOrderCommand command,
+        CancellationToken cancellationToken)
     {
         var order = OrderModel.CreateNew(
             description: command.Description,
@@ -44,9 +45,9 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommandParam
             await _serviceBus.SendToTopicAsync<OrderPlaced>(
                 message: new
                 {
-                    CustomerId = command.CustomerId,
-                    ProductId = orderProduct.ProductId,
-                    Quantity = orderProduct.Quantity
+                    command.CustomerId,
+                    orderProduct.ProductId,
+                    orderProduct.Quantity
                 },
                 topicName: TopicNames.Orders);
         }

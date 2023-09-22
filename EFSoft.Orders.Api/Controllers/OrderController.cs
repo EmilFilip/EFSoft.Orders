@@ -4,17 +4,11 @@
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private readonly ICommandExecutor _commandExecutor;
-    private readonly IQueryExecutor _queryExecutor;
+    private readonly IMediator _mediator;
 
-    public OrderController(
-            ICommandExecutor commandExecutor,
-            IQueryExecutor queryExecutor)
+    public OrderController(IMediator mediator)
     {
-        _commandExecutor = commandExecutor
-            ?? throw new ArgumentNullException(nameof(commandExecutor));
-        _queryExecutor = queryExecutor
-            ?? throw new ArgumentNullException(nameof(queryExecutor));
+        _mediator = mediator;
 
     }
 
@@ -32,8 +26,7 @@ public class OrderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(Guid orderId)
     {
-        var results = await _queryExecutor.ExecuteAsync<GetOrderQueryParameters, GetOrderQueryResult>(
-         new GetOrderQueryParameters(orderId));
+        var results = await _mediator.Send(new GetOrderQuery(orderId));
 
         if (results == null)
         {
@@ -49,8 +42,7 @@ public class OrderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCustomerOrders(Guid customerId)
     {
-        var results = await _queryExecutor.ExecuteAsync<GetCustomerOrdersQueryParameters, GetCustomerOrdersQueryResult>(
-         new GetCustomerOrdersQueryParameters(customerId));
+        var results = await _mediator.Send(new GetCustomerOrdersQuery(customerId));
 
         if (results == null)
         {
@@ -63,9 +55,9 @@ public class OrderController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Post([FromBody] CreateOrderCommandParameters parameters)
+    public async Task<IActionResult> Post([FromBody] CreateOrderCommand parameters)
     {
-        await _commandExecutor.ExecuteAsync(parameters);
+        await _mediator.Send(parameters);
 
         return Ok();
     }
@@ -73,9 +65,9 @@ public class OrderController : ControllerBase
     [HttpPut()]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Put([FromBody] UpdateOrderCommandParameters parameters)
+    public async Task<IActionResult> Put([FromBody] UpdateOrderCommand parameters)
     {
-        await _commandExecutor.ExecuteAsync(parameters);
+        await _mediator.Send(parameters);
 
         return Ok();
     }

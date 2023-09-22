@@ -1,7 +1,6 @@
-﻿namespace EFSoft.Orders.Application.Queries.Handlers;
+﻿namespace EFSoft.Orders.Application.Queries.GetOrder;
 
-public class GetOrderQueryHandler :
-        IQueryHandler<GetOrderQueryParameters, GetOrderQueryResult>
+public class GetOrderQueryHandler : IQueryHandler<GetOrderQuery, GetOrderQueryResult>
 {
     private readonly IOrdersRepository _ordersRepository;
     private readonly IOrderProductsRepository _orderProductsRepository;
@@ -10,12 +9,12 @@ public class GetOrderQueryHandler :
         IOrdersRepository ordersRepository,
         IOrderProductsRepository orderProductsRepository)
     {
-        _ordersRepository = ordersRepository ?? throw new ArgumentNullException(nameof(ordersRepository));
-        _orderProductsRepository = orderProductsRepository ?? throw new ArgumentNullException(nameof(orderProductsRepository));
+        _ordersRepository = ordersRepository;
+        _orderProductsRepository = orderProductsRepository;
     }
 
-    public async Task<GetOrderQueryResult> HandleAsync(
-            GetOrderQueryParameters parameters,
+    public async Task<GetOrderQueryResult> Handle(
+            GetOrderQuery parameters,
             CancellationToken cancellationToken = default)
     {
         var order = await _ordersRepository.GetOrderAsync(
