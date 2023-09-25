@@ -13,8 +13,10 @@ public class OrderProductsRepository : IOrderProductsRepository
         Guid orderId,
         CancellationToken cancellationToken = default)
     {
-        var entities = await _ordersDbContext.OrderProducts.Where(
-            o => o.OrderId == orderId)
+        var entities = await _ordersDbContext.OrderProducts
+            .AsQueryable()
+            .Where(o => o.OrderId == orderId)
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
 
         if (!entities.Any())
@@ -33,8 +35,7 @@ public class OrderProductsRepository : IOrderProductsRepository
 
         await _ordersDbContext.OrderProducts.AddRangeAsync(entities);
 
-        await _ordersDbContext
-            .SaveChangesAsync(cancellationToken);
+        await _ordersDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateOrderProductAsync(

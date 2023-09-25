@@ -24,7 +24,9 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
             description: command.Description,
             customerId: command.CustomerId);
 
-        await _ordersRepository.CreateOrderAsync(order);
+        await _ordersRepository.CreateOrderAsync(
+            order,
+            cancellationToken);
 
         var orderProducts = new List<OrderProductModel>();
 
@@ -38,7 +40,9 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
             orderProducts.Add(newOrderProduct);
         }
 
-        await _orderProductsRepository.CreateOrderProductsAsync(orderProducts);
+        await _orderProductsRepository.CreateOrderProductsAsync(
+            orderProducts,
+            cancellationToken);
 
         foreach (var orderProduct in orderProducts)
         {

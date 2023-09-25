@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace EFSoft.Orders.Api.Endpoints;
+﻿namespace EFSoft.Orders.Api.Endpoints;
 
 public static class OrderEnpoints
 {
@@ -9,14 +7,15 @@ public static class OrderEnpoints
         var group = endpoint.MapGroup("api/order");
 
         group.MapGet("{orderId:guid}", Get);
-        group.MapGet("[action]/{customerId:guid}", GetCustomerOrders).WithName("GetCustomerOrders");
+        group.MapGet("getCustomerOrders/{customerId:guid}", GetCustomerOrders);
         group.MapPost("", Post);
         group.MapPut("", Put);
     }
 
     public static async Task<Results<Ok<GetOrderQueryResult>, NotFound>> Get(
         Guid orderId,
-        IMediator mediator)
+        IMediator mediator,
+        CancellationToken cancellationToken)
     {
         var results = await mediator.Send(new GetOrderQuery(orderId));
 
@@ -29,7 +28,8 @@ public static class OrderEnpoints
     }
     public static async Task<Results<Ok<GetCustomerOrdersQueryResult>, NotFound>> GetCustomerOrders(
         Guid customerId,
-        IMediator mediator)
+        IMediator mediator,
+        CancellationToken cancellationToken)
     {
         var results = await mediator.Send(new GetCustomerOrdersQuery(customerId));
 
@@ -43,7 +43,8 @@ public static class OrderEnpoints
 
     public static async Task<IResult> Post(
         [FromBody] CreateOrderCommand parameters,
-        IMediator mediator)
+        IMediator mediator,
+        CancellationToken cancellationToken)
     {
         await mediator.Send(parameters);
 
@@ -52,7 +53,8 @@ public static class OrderEnpoints
 
     public static async Task<IResult> Put(
         [FromBody] UpdateOrderCommand parameters,
-        IMediator mediator)
+        IMediator mediator,
+        CancellationToken cancellationToken)
     {
         await mediator.Send(parameters);
 
