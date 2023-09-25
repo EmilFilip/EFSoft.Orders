@@ -17,7 +17,9 @@ public static class OrderEnpoints
         IMediator mediator,
         CancellationToken cancellationToken)
     {
-        var results = await mediator.Send(new GetOrderQuery(orderId));
+        var results = await mediator.Send(
+            new GetOrderQuery(orderId),
+            cancellationToken);
 
         if (results == null)
         {
@@ -31,7 +33,9 @@ public static class OrderEnpoints
         IMediator mediator,
         CancellationToken cancellationToken)
     {
-        var results = await mediator.Send(new GetCustomerOrdersQuery(customerId));
+        var results = await mediator.Send(
+            new GetCustomerOrdersQuery(customerId),
+            cancellationToken);
 
         if (results == null)
         {
@@ -46,7 +50,9 @@ public static class OrderEnpoints
         IMediator mediator,
         CancellationToken cancellationToken)
     {
-        await mediator.Send(parameters);
+        await mediator.Send(
+            parameters,
+            cancellationToken);
 
         return Results.Ok();
     }
@@ -56,7 +62,9 @@ public static class OrderEnpoints
         IMediator mediator,
         CancellationToken cancellationToken)
     {
-        await mediator.Send(parameters);
+        await mediator.Send(
+            parameters,
+            cancellationToken);
 
         return Results.Ok();
     }
