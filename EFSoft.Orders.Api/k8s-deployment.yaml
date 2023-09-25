@@ -1,0 +1,51 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: svc-efsoft-services-ordersapi
+  labels:
+    version: dev
+    product: efsoft-services-ordersapi
+spec:
+  selector:
+    app: efsoft-services-ordersapi
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-efsoft-services-ordersapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: efsoft-services-ordersapi
+  template:
+    metadata:
+      labels:
+        app: efsoft-services-ordersapi
+    spec:
+      containers:
+      - name: efsoft-services-ordersapi
+        image: efsoftcr.azurecr.io/efsoft_orders:v5
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: ConnectionStrings__OrdersConnectionString
+          valueFrom: 
+            secretKeyRef:
+              name: orders-db
+              key: OrdersConnectionString
+        ports:
+        - containerPort: 80
+        - containerPort: 443
