@@ -1,4 +1,4 @@
-﻿namespace EFSoft.Orders.Application.RepositoryContracts;
+﻿namespace EFSoft.Orders.Domain.RepositoryContracts;
 
 public interface IOrderProductsRepository
 {
