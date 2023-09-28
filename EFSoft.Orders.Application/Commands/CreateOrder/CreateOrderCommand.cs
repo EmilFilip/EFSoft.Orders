@@ -3,6 +3,4 @@
 public sealed record class CreateOrderCommand(
          Guid CustomerId,
          string Description,
-         IEnumerable<OrderProduct> OrderProducts) : ICommand
-{
-}
+         IEnumerable<OrderCreate> OrderProducts) : ICommand;

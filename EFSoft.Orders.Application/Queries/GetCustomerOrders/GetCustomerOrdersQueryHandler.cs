@@ -35,6 +35,7 @@ public class GetCustomerOrdersQueryHandler : IQueryHandler<GetCustomerOrdersQuer
 
             if (orderProducts.Any())
             {
+                order.OrderProducts = new List<OrderProductModel>();
                 order.OrderProducts.AddRange(orderProducts);
             }
         }

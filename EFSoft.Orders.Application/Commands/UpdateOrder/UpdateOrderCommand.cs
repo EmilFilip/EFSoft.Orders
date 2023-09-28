@@ -5,6 +5,4 @@ public sealed record class UpdateOrderCommand(
          Guid CustomerId,
          string Description,
          OrderStatus OrderStatus,
-         IEnumerable<OrderProductModel> OrderProducts) : ICommand
-{
-}
+         IEnumerable<OrderProductCreate> OrderProducts) : ICommand;

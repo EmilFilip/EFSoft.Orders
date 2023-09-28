@@ -1,4 +1,6 @@
-﻿namespace EFSoft.Orders.Infrastructure.Repositories;
+﻿using EFSoft.Orders.Infrastructure.Entities;
+
+namespace EFSoft.Orders.Infrastructure.Repositories;
 
 public class OrderProductsRepository : IOrderProductsRepository
 {
@@ -43,7 +45,7 @@ public class OrderProductsRepository : IOrderProductsRepository
         CancellationToken cancellationToken = default)
     {
         var entity = await _ordersDbContext.OrderProducts.FindAsync(
-            keyValues: new object[] { order.OrderId },
+            keyValues: new object[] { order.OrderProductId },
             cancellationToken: cancellationToken);
 
         if (entity != null)
