@@ -28,7 +28,7 @@ stages:
       inputs:
         containerRegistry: 'efsoft'
         command: 'build'
-        repository: 'efsoft-orders'
+        repository: 'efsoft_orders'
         dockerfile: '**/Dockerfile'
         arguments: '--build-arg NUGET_PASSWORD=$(PAT)'
         tags: $(Build.BuildId)
@@ -36,6 +36,6 @@ stages:
       displayName: 'Push Docker image'
       inputs:
         containerRegistry: 'efsoft'
-        repository: 'efsoft-orders'
+        repository: 'efsoft_orders'
         command: 'push'
         tags: $(Build.BuildId)
