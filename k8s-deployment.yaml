@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: efsoft-services-ordersapi
-        image: efsoft.azurecr.io/efsoft_orders:v1
+        image: efsoft.azurecr.io/efsoft-orders
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
