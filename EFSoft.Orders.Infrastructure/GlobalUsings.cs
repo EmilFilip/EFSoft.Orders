@@ -8,3 +8,4 @@ global using EFSoft.Orders.Infrastructure.DBContexts;
 global using EFSoft.Orders.Infrastructure.Entities;
 
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.IdentityModel.Tokens;

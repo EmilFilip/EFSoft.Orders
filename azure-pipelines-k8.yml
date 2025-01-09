@@ -1,0 +1,51 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build and Push image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: 'Build Docker image'
+      inputs:
+        containerRegistry: 'efsoft'
+        command: 'build'
+        repository: 'efsoft-order'
+        dockerfile: '**/Dockerfile'
+        arguments: '--build-arg NUGET_PASSWORD=$(PAT)'
+        tags: latest
+    - task: Docker@2
+      displayName: 'Push Docker image'
+      inputs:
+        containerRegistry: 'efsoft'
+        repository: 'efsoft-orders'
+        command: 'push'
+        tags: latest
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(agent.builddirectory)'
+        Contents: $(agent.builddirectory)/**/azure-pipelines-k8.yaml
+        TargetFolder: '$(build.artifactstagingdirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'

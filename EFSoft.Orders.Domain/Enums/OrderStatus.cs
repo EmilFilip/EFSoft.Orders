@@ -6,5 +6,5 @@ public enum OrderStatus
     Open = 1,
     Dispatched = 2,
     Delivered = 3,
-    Canceled = 4
+    Cancelled = 4
 }

@@ -1,25 +1,26 @@
 var builder = WebApplication.CreateBuilder(args);
 
-if (!builder.Environment.IsDevelopment())
-{
-    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
+//if (!builder.Environment.IsDevelopment())
+//{
+//    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
 
-    builder.Configuration.AddAzureAppConfiguration(options =>
-    {
-        options.Connect(appConfigurationConnectionString)
-                .ConfigureRefresh(refresh =>
-                {
-                    refresh.Register("Settings:Sentinel", refreshAll: true).SetCacheExpiration(new TimeSpan(0, 1, 0));
-                });
-    });
-}
+//    builder.Configuration.AddAzureAppConfiguration(options =>
+//    {
+//        options.Connect(appConfigurationConnectionString)
+//                .ConfigureRefresh(refresh =>
+//                {
+//                    refresh.Register("Settings:Sentinel", refreshAll: true).SetCacheExpiration(new TimeSpan(0, 1, 0));
+//                });
+//    });
+//}
 
+builder.Services.AddCarter();
 // Add services to the container.
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Configuration.AddEnvironmentVariables();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Orders Microservice", Version = "v1" });
@@ -28,8 +29,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.RegisterLocalServices(builder.Configuration);
 
 var app = builder.Build();
-
-app.MapCustomerEndpoints();
+app.MapCarter();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -42,7 +42,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.Run();
