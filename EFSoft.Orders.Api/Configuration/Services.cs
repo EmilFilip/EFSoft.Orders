@@ -22,6 +22,7 @@ public static class Services
              .AddScoped<ICreateOrderRepository, CreateOrderRepository>()
              .AddScoped<IGetCustomerOrdersRepository, GetCustomerOrdersRepository>()
              .AddScoped<IGetOrderProductsForOrderRepository, GetOrderProductsForOrderRepository>()
+             .AddScoped<IGetProductsWithOrderByOrderIdRepository, GetProductsWithOrderByOrderIdRepository>()
              .AddScoped<IGetOrderRepository, GetOrderRepository>()
              .AddScoped<IUpdateOrderProductsRepository, UpdateOrderProductsRepository>()
              .AddScoped<IUpdateOrderRepository, UpdateOrderRepository>()

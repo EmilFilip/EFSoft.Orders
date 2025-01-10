@@ -1,6 +1,4 @@
-﻿using EFSoft.Orders.Application.GetOrder;
-
-namespace EFSoft.Orders.Api.GetOrder;
+﻿namespace EFSoft.Orders.Api.GetOrder;
 
 public static class GetOrderEndpoint
 {

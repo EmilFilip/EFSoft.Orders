@@ -1,0 +1,53 @@
+﻿@HttpFile_HostAddress = https://localhost:7245
+
+### Get Order by Id
+GET {{HttpFile_HostAddress}}/api/order/A99B3EBE-B6E8-4C91-A3A2-2C3B41E18FA5
+Accept: application/json
+
+### Get Customer Orders by CustomerId
+GET {{HttpFile_HostAddress}}/api/order/get-customer-orders/2A8C800A-3226-4CC8-B920-1A42F1E67F7B
+Accept: application/json
+
+### Create New Order
+POST {{HttpFile_HostAddress}}/api/order
+Content-Type: application/json
+
+{
+  "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa1",
+  "description": "string",
+  "orderProducts": [
+    {
+      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa2",
+      "quantity": 2
+    },
+    {
+      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa3",
+      "quantity": 5
+    }
+  ]
+}
+
+### Update an Existing Order
+PUT {{HttpFile_HostAddress}}/api/order
+Content-Type: application/json
+
+{
+  "orderId": "A2EF3E67-76A9-496E-A9C6-0CD2403AC013",
+  "description": "From Http File",
+  "orderProducts": [
+    {
+      "productId": "3FA85F64-5717-4562-B3FC-2C963F66AFA2",
+      "quantity": 7
+    }
+  ]
+}
+
+### List Customers
+PUT {{HttpFile_HostAddress}}/api/order/status
+Accept: application/json
+Content-Type: application/json
+
+{
+  "orderId": "A2EF3E67-76A9-496E-A9C6-0CD2403AC013",
+  "orderStatus": 2
+}

@@ -33,16 +33,16 @@ public class CreateOrderCommandHandler(
             orderProducts,
             cancellationToken);
 
-        foreach (var orderProduct in orderProducts)
-        {
-            await serviceBus.SendToTopicAsync<OrderPlacedEvent>(
-                message: new
-                {
-                    command.CustomerId,
-                    orderProduct.ProductId,
-                    orderProduct.Quantity
-                },
-                topicName: TopicNames.Orders);
-        }
+        //foreach (var orderProduct in orderProducts)
+        //{
+        //    await serviceBus.SendToTopicAsync<OrderPlacedEvent>(
+        //        message: new
+        //        {
+        //            command.CustomerId,
+        //            orderProduct.ProductId,
+        //            orderProduct.Quantity
+        //        },
+        //        topicName: TopicNames.Orders);
+        //}
     }
 }

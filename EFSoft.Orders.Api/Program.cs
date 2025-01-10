@@ -1,18 +1,18 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 
-//if (!builder.Environment.IsDevelopment())
-//{
-//    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
+if (!builder.Environment.IsDevelopment())
+{
+    var appConfigurationConnectionString = builder.Configuration.GetValue<string>("AppConfigurationConnectionString");
 
-//    builder.Configuration.AddAzureAppConfiguration(options =>
-//    {
-//        options.Connect(appConfigurationConnectionString)
-//                .ConfigureRefresh(refresh =>
-//                {
-//                    refresh.Register("Settings:Sentinel", refreshAll: true).SetCacheExpiration(new TimeSpan(0, 1, 0));
-//                });
-//    });
-//}
+    _ = builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        _ = options.Connect(appConfigurationConnectionString)
+                .ConfigureRefresh(refresh =>
+                {
+                    _ = refresh.Register("Settings:Sentinel", refreshAll: true).SetRefreshInterval(new TimeSpan(0, 1, 0));
+                });
+    });
+}
 
 builder.Services.AddCarter();
 // Add services to the container.

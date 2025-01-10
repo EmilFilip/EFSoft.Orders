@@ -1,4 +1,6 @@
-﻿namespace EFSoft.Orders.Application.GetCustomerOrders;
+﻿using System.Collections.Generic;
+
+namespace EFSoft.Orders.Application.GetCustomerOrders;
 
 public class GetCustomerOrdersQueryHandler(
     IGetCustomerOrdersRepository getCustomerOrdersRepository,
@@ -18,20 +20,23 @@ public class GetCustomerOrdersQueryHandler(
             return new GetCustomerOrdersQueryResult(Enumerable.Empty<OrderDomainModel>());
         }
 
+        var ordersAndProducts = new List<OrderDomainModel>();
+
         foreach (var order in orders)
         {
+
             var orderProducts = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
                 orderId: order.OrderId,
                 cancellationToken: cancellationToken);
 
             if (orderProducts.Any())
             {
-                order.OrderProducts = new List<OrderProductDomainModel>();
-                order.OrderProducts.AddRange(orderProducts);
+                order.OrderProducts = orderProducts;
             }
+            ordersAndProducts.Add(order);
         }
 
-        return new GetCustomerOrdersQueryResult(orders);
+        return new GetCustomerOrdersQueryResult(ordersAndProducts);
     }
 }
 

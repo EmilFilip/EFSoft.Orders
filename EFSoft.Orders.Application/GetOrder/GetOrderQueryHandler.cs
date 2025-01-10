@@ -22,7 +22,7 @@ public class GetOrderQueryHandler(
             orderId: order.OrderId,
             cancellationToken: cancellationToken);
 
-        order.OrderProducts.AddRange(products);
+        order.OrderProducts = products;
 
         return new GetOrderQueryResult(order);
     }

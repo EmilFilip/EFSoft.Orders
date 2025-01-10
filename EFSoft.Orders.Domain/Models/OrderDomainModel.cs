@@ -64,5 +64,5 @@ public class OrderDomainModel
 
     public OrderStatus OrderStatus { get; set; }
 
-    public List<OrderProductDomainModel> OrderProducts { get; set; }
+    public IEnumerable<OrderProductDomainModel> OrderProducts { get; set; }
 }

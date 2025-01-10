@@ -6,21 +6,18 @@ public class UpdateOrderProductsRepository(OrdersDbContext ordersDbContext) : IU
         IEnumerable<OrderProductDomainModel> orderProducts,
         CancellationToken cancellationToken = default)
     {
-        var entities = orderProducts.Select(MapToEntity);
+        var orderIds = orderProducts.Select(x => x.OrderId);
+        var productIds = orderProducts.Select(x => x.ProductId);
+
+        var entities = await ordersDbContext.OrderProducts
+            .AsQueryable()
+            .Where(o => orderIds.Contains(o.OrderId) && productIds.Contains(o.ProductId))
+            .ToListAsync();
+
+        entities.ForEach(domainModel => domainModel.Quantity = orderProducts.First(d => d.ProductId == domainModel.ProductId).Quantity);
+
         ordersDbContext.UpdateRange(entities);
 
-        await ordersDbContext.SaveChangesAsync(cancellationToken);
-    }
-    private static OrderProduct MapToEntity(
-    OrderProductDomainModel domainOrder)
-    {
-        return new OrderProduct
-        {
-            OrderId = domainOrder.OrderId,
-            OrderProductId = domainOrder.OrderProductId,
-            ProductId = domainOrder.ProductId,
-            Quantity = domainOrder.Quantity,
-            UpdatedAt = DateTime.UtcNow
-        };
+        _ = await ordersDbContext.SaveChangesAsync(cancellationToken);
     }
 }
