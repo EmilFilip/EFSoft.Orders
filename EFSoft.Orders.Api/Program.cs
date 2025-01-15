@@ -15,11 +15,9 @@ if (!builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddCarter();
-// Add services to the container.
-builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Configuration.AddEnvironmentVariables();
-builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -31,11 +29,12 @@ builder.Services.RegisterLocalServices(builder.Configuration);
 var app = builder.Build();
 app.MapCarter();
 
-// Configure the HTTP request pipeline.
+app.MapHealthChecks("/health");
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    _ = app.UseSwagger();
+    _ = app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer Microservice V1");
     });

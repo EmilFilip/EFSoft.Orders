@@ -2,7 +2,7 @@
 
 public interface IGetOrderRepository
 {
-    Task<OrderDomainModel> GetOrderAsync(
+    Task<OrderDomainModel?> GetOrderAsync(
              Guid orderId,
              CancellationToken cancellationToken = default);
 }

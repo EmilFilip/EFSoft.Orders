@@ -2,7 +2,7 @@
 
 public class GetOrderRepository(OrdersDbContext ordersDbContext) : IGetOrderRepository
 {
-    public async Task<OrderDomainModel> GetOrderAsync(
+    public async Task<OrderDomainModel?> GetOrderAsync(
         Guid orderId,
         CancellationToken cancellationToken = default)
     {

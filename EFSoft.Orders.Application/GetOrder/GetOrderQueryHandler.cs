@@ -2,9 +2,9 @@
 
 public class GetOrderQueryHandler(
     IGetOrderRepository getOrderRepository,
-    IGetOrderProductsForOrderRepository getOrderProductsForOrderRepository) : IQueryHandler<GetOrderQuery, GetOrderQueryResult>
+    IGetOrderProductsForOrderRepository getOrderProductsForOrderRepository) : IQueryHandler<GetOrderQuery, GetOrderQueryResult?>
 {
-    public async Task<GetOrderQueryResult> Handle(
+    public async Task<GetOrderQueryResult?> Handle(
             GetOrderQuery parameters,
             CancellationToken cancellationToken = default)
     {
@@ -15,7 +15,7 @@ public class GetOrderQueryHandler(
 
         if (order is null)
         {
-            return null;
+            return default;
         }
 
         var products = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
