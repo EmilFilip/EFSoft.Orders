@@ -14,7 +14,6 @@ public class UpdateOrderRepository(OrdersDbContext ordersDbContext) : IUpdateOrd
         {
             entity.UpdatedAt = DateTime.Now;
             entity.Description = order.Description;
-            entity.OrderStatus = order.OrderStatus;
 
             _ = ordersDbContext.Update(entity);
             _ = await ordersDbContext.SaveChangesAsync(cancellationToken);

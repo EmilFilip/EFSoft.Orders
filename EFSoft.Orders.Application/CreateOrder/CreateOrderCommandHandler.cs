@@ -13,6 +13,7 @@ public class CreateOrderCommandHandler(
             description: command.Description,
             customerId: command.CustomerId);
 
+        //Insert a new order and new order product within the same db transaction
         await createOrderRepository.CreateOrderAsync(
             order,
             cancellationToken);

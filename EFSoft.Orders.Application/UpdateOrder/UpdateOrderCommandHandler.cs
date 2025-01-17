@@ -12,6 +12,7 @@ public class UpdateOrderCommandHandler(
             orderId: command.OrderId,
             description: command.Description);
 
+        //Update the order and it's product within the same db transaction
         await updateOrderRepository.UpdateOrderAsync(
             order: order,
             cancellationToken: cancellationToken);
